@@ -49,7 +49,7 @@ The best-performing model is the **multilevel zero-inflated negative binomial mo
 
 ## Conceptual Framework
 
-![Model Diagram](figures/model_diagram.png)
+![Model Diagram](figures/cs_distribution_diagram.png) 
 
 *Figure: Distribution of CS course offerings in K-12 schools in the United States.*
 
