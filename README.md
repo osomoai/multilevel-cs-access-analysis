@@ -7,6 +7,15 @@ This project examines disparities in access to computer science (CS) courses acr
 How do school characteristics, demographics, and institutional context shape access to computer science education—and to what extent are some schools structurally excluded from offering CS courses?
 
 ---
+## Distribution of CS Course Offerings
+
+![Distribution of CS Courses](figures/cs_distribution_diagram.png)
+
+*Figure: Distribution of CS course offerings in K–12 schools in the United States.*
+
+This distribution shows a large concentration of schools offering few or no CS courses, motivating the use of zero-inflated count models.
+
+---
 
 ## Key Insights & Policy Implications
 
@@ -44,14 +53,6 @@ Four models were estimated:
 The **zero-inflated models consistently outperformed standard models**, and the inclusion of demographic variables substantially improved model fit (AIC reduction).  
 
 The best-performing model is the **multilevel zero-inflated negative binomial model with demographic controls**, indicating that both structural zero access and school composition are critical to understanding disparities.
-
----
-
-## Conceptual Framework
-
-![Model Diagram](figures/cs_distribution_diagram.png) 
-
-*Figure: Distribution of CS course offerings in K-12 schools in the United States.*
 
 ---
 
