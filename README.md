@@ -9,7 +9,7 @@ How do school characteristics, demographics, and institutional context shape acc
 ---
 ## Distribution of CS Course Offerings
 
-![Distribution of CS Courses](figures/cs_distribution_diagram.png)
+![Distribution of CS Courses](figures/Figure1_CS_Distribution_by_Year.png) 
 
 *Figure: Distribution of CS course offerings in K–12 schools in the United States.*
 
