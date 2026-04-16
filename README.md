@@ -60,6 +60,6 @@ The best-performing model is the **multilevel zero-inflated negative binomial mo
 
 A detailed write-up of the methodology, model results, and interpretation is available here:
 
-📄 [Full Analysis (Word Document)](docs/full_analysis.docx)
+📄 [Full Research Paper (PDF)](docs/Full_research_paper.pdf)
 
 ---
