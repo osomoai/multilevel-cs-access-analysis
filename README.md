@@ -1,4 +1,4 @@
-# A Multilevel Zero-Inflated Negative Binomial Model with an Application to Computer Science Course Access
+# A Multilevel Zero-Inflated Negative Binomial Model with an Applicaton to Computer Science Course Access
 
 ## Overview
 This project examines disparities in access to computer science (CS) courses across U.S. K–12 schools using multilevel count models. It combines hierarchical modeling (state and district levels) with zero-inflated and negative binomial approaches to better capture both variation in course offerings and structural lack of access.
@@ -60,6 +60,6 @@ The best-performing model is the **multilevel zero-inflated negative binomial mo
 
 A detailed write-up of the methodology, model results, and interpretation is available here:
 
-📄 [Full Research Paper (PDF)](docs/Full_research_paper.pdf)
+📄 [Full Research Paper (PDF)](Full_research_paper/Full_research_paper.pdf)
 
 ---
