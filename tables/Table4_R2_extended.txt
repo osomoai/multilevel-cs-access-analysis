@@ -1,0 +1,4 @@
+# R2 for Mixed Models
+
+  Conditional R2: 0.917
+     Marginal R2: 0.420

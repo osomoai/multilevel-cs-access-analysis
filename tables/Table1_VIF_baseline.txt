@@ -1,0 +1,23 @@
+# Check for Multicollinearity
+
+* conditional component:
+
+Low Correlation
+
+                          Term  VIF   VIF 95% CI adj. VIF Tolerance Tolerance 95% CI
+                   SCHOOL_YEAR 1.05 [1.04, 1.06]     1.02      0.95     [0.94, 0.96]
+                 TitleI_Status 1.06 [1.05, 1.07]     1.03      0.95     [0.94, 0.95]
+                    Elementary 1.17 [1.16, 1.18]     1.08      0.85     [0.85, 0.86]
+                        Middle 1.21 [1.19, 1.22]     1.10      0.83     [0.82, 0.84]
+                          High 1.01 [1.00, 1.02]     1.00      0.99     [0.98, 1.00]
+       Juvenile_Justice_School 1.03 [1.02, 1.04]     1.01      0.97     [0.96, 0.98]
+ ns(log(school_enrollment), 2) 1.08 [1.07, 1.09]     1.04      0.93     [0.92, 0.94]
+
+* zero inflated component:
+
+Low Correlation
+
+                   Term  VIF   VIF 95% CI adj. VIF Tolerance Tolerance 95% CI
+             Elementary 1.39 [1.37, 1.40]     1.18      0.72     [0.71, 0.73]
+                 Middle 1.49 [1.47, 1.51]     1.22      0.67     [0.66, 0.68]
+ log(school_enrollment) 1.09 [1.08, 1.10]     1.04      0.92     [0.91, 0.93]
