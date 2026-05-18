@@ -7,7 +7,7 @@ data1 <- read.csv("combined_data_clean_final_full.csv")
 #Import the library for data manipulation
 library(dplyr)
 
-#Extract only needed varaibles 
+#Extract only needed variables 
 analysis_vars <- c(
   "CS_Classes_Offered", "school_enrollment",
   "SCHOOL_YEAR", "TitleI_Status",
@@ -109,7 +109,7 @@ access_model_zi_m2 <- glmmTMB(
 
 summary (access_model_zi_m2)
 
-#Fourth model based on the assumption that zeros depend on institutional structure and size
+#Third model based on the assumption that zeros depend on institutional structure and size
 access_model_zi_m3 <- glmmTMB(
   CS_Classes_Offered ~ SCHOOL_YEAR + TitleI_Status + Elementary + Middle + High +
     Juvenile_Justice_School + ns(log(school_enrollment), 2) +
@@ -132,7 +132,7 @@ nb_data2 <- data1 %>%
   filter(complete.cases(across(all_of(analysis_vars))))
 
 
-#Export the second data incase it is needed elsewhere
+#Export the second data for possible use in the future
 write.csv(
   nb_data2,
   "nb_data2_clean.csv",
@@ -282,9 +282,70 @@ capture.output(check_collinearity(access_model_zi_m3),
 capture.output(check_collinearity(access_model_zi_m3b),
                file = "outputs/tables/Table2_VIF_extended.txt")
 
-# Random effect inspection
-ranef(access_model_zi_m3)
-ranef(access_model_zi_m3b)
+# Random effect inspection for baseline model
+re_base <- ranef(access_model_zi_m3)$cond
+
+# Check grouping names
+names(re_base)
+
+# Replace the names (re_base) 
+
+district_base <- data.frame(
+  Group = "District",
+  ID = rownames(re_base$District_ID),
+  Effect = re_base$District_ID[,1]
+)
+
+state_base <- data.frame(
+  Group = "State",
+  ID = rownames(re_base$State_Code),
+  Effect = re_base$State_Code[,1]
+)
+
+# Combine together
+random_effects_base <- rbind(
+  district_base,
+  state_base
+)
+
+# Export
+write.csv(
+  random_effects_base,
+  "outputs/tables/Table_RandomEffects_Baseline.csv",
+  row.names = FALSE
+)
+
+#Random effect inspection for extended model
+re_ext <- ranef(access_model_zi_m3b)$cond
+
+# Check grouping names
+names(re_ext)
+
+# Replace names accordingly
+district_ext <- data.frame(
+  Group = "District",
+  ID = rownames(re_ext$District_ID),
+  Effect = re_ext$District_ID[,1]
+)
+
+state_ext <- data.frame(
+  Group = "State",
+  ID = rownames(re_ext$State_Code),
+  Effect = re_ext$State_Code[,1]
+)
+
+# Combine together
+random_effects_ext <- rbind(
+  district_ext,
+  state_ext
+)
+
+# Export
+write.csv(
+  random_effects_ext,
+  "outputs/tables/Table_RandomEffects_Extended.csv",
+  row.names = FALSE
+)
 
 # R-squared
 r2_nakagawa(access_model_zi_m3)
@@ -420,5 +481,76 @@ hist(pred_ext,
 legend("topright",
        legend = c("Observed", "Predicted"),
        fill = c(rgb(0,0,1,0.5), rgb(1,0,0,0.5)))
+
+dev.off()
+
+
+#Plot of the district level random effects
+library(ggplot2)
+Figure13_District_random_effect <- ggplot(district_base, aes(x = Effect)) +
+  geom_histogram(bins = 50, fill = "steelblue", color = "white") +
+  theme_minimal() +
+  labs(
+    title = "Distribution of District Random Effects",
+    x = "District Random Intercept",
+    y = "Count"
+  )
+
+# Save figure
+ggsave(
+  filename = "outputs/figures/Figure13_District_random_effect.png",
+  plot = Figure13_District_random_effect,
+  width = 8,
+  height = 6,
+  dpi = 300
+)
+
+# Extract state random effects
+re_state <- ranef(access_model_zi_m3)$cond$State_Code
+
+# Convert to data frame
+state_effects <- data.frame(
+  State = rownames(re_state),
+  Effect = re_state[,1]
+)
+
+# Order by effect size
+state_effects <- state_effects[
+  order(state_effects$Effect),
+]
+
+# Convert State to ordered factor
+state_effects$State <- factor(
+  state_effects$State,
+  levels = state_effects$State
+)
+
+# Plot
+png(
+  "outputs/plots/Figure_State_RandomEffects.png",
+  width = 1400,
+  height = 1000,
+  res = 150
+)
+
+plot(
+  state_effects$Effect,
+  1:nrow(state_effects),
+  yaxt = "n",
+  pch = 19,
+  col = "steelblue",
+  xlab = "Random Effect Estimate",
+  ylab = "State",
+  main = "State-Level Random Effects"
+)
+
+axis(
+  2,
+  at = 1:nrow(state_effects),
+  labels = state_effects$State,
+  las = 1
+)
+
+abline(v = 0, col = "red", lwd = 2)
 
 dev.off()
