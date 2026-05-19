@@ -48,7 +48,7 @@ Six models were estimated:
 - Multilevel Negative Binomial (MNB)
 - Multilevel Zero-Inflated Negative Binomial (MZINB)
 - MZINB (with structural predictors of excess zeros)
-- Extended MNB (the extended featured more demographics)
+- Extended MNB (the extension include more relevant demographic variables)
 - Extended MZINB
 - Extended MZINB (with structural predictors of excess zeros)
   
