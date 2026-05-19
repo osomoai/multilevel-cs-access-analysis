@@ -43,22 +43,24 @@ This distribution shows a large concentration of schools offering few or no CS c
 
 ## Model Comparison
 
-Four models were estimated:
+Six models were estimated:
 
-- Multilevel Negative Binomial
-- Multilevel Zero-Inflated Negative Binomial
-- Extended model with demographics
-- Extended zero-inflated model
-
+- Multilevel Negative Binomial (MNB)
+- Multilevel Zero-Inflated Negative Binomial (MZINB)
+- MZINB (with structural predictors of excess zeros)
+- Extended MNB (the extended featured more demographics)
+- Extended MZINB
+- Extended MZINB (with structural predictors of excess zeros)
+  
 The **zero-inflated models consistently outperformed standard models**, and the inclusion of demographic variables substantially improved model fit (AIC reduction).  
 
-The best-performing model is the **multilevel zero-inflated negative binomial model with demographic controls**, indicating that both structural zero access and school composition are critical to understanding disparities.
+The best-performing model is the **multilevel zero-inflated negative binomial model with demographic controls and structural predictors of excess zeros**, indicating that both demographics, structural zero access, and school composition are critical to understanding disparities in CS courses.
 
 ---
 
 ## Full Analysis
 
-A detailed write-up of the methodology, model results, and interpretation is available here:
+A detailed write-up of the study background, methodology, model results, and interpretation is available here:
 
 📄 [Full Research Paper (PDF)](Full_research_paper/Full_research_paper.pdf)
 
