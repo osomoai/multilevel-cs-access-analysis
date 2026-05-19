@@ -54,7 +54,7 @@ Six models were estimated:
   
 The **zero-inflated models consistently outperformed standard models**, and the inclusion of demographic variables substantially improved model fit (AIC reduction).  
 
-The best-performing model is the **multilevel zero-inflated negative binomial model with demographic controls and structural predictors of excess zeros**, indicating that adding relevant demographics and decomposing the model into two parts while accounting for structural covariate of zero access are critical to understanding disparities in CS courses.
+The best-performing model is the **multilevel zero-inflated negative binomial model with demographic controls and structural predictors of excess zeros**. This indicates that adding relevant demographics and decomposing the model into two parts while accounting for structural covariate of zero access are critical to understanding disparities in CS courses.
 
 ---
 
