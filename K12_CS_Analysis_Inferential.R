@@ -13,9 +13,12 @@ analysis_vars <- c(
   "SCHOOL_YEAR", "TitleI_Status",
   "Elementary", "Middle", "High",
   "Juvenile_Justice_School",
-  "sex_female",
-  "race_black", "race_hispanic", "race_asian",
-  "race_multiracial", "race_american_indian"
+  "sex_female_prop",
+  "race_black_prop", "race_hispanic_prop", "race_asian_prop",
+  "race_multiracial_prop", "race_american_indian_prop",
+  "sex_female", "race_black", "race_hispanic", 
+  "race_asian", "race_multiracial", 
+  "race_american_indian"
 )
 
 #Missing data were handled using a combination of listwise deletion and imputation
@@ -28,17 +31,21 @@ nb_data <- data1 %>%
 
 nb_data
 
-#Export the data incase it is needed elsewhere
+#Export the data, since it is needed elsewhere for descriptive analysis
 write.csv(
   nb_data,
   "nb_data_clean.csv",
   row.names = FALSE
 )
 
+#Now create a subset of the data for modeling purposes
+modeling_analysis_data <- nb_data %>%
+  select(all_of(analysis_vars))
+
 #####Descriptive Statistics showing plot of the histogram of CS courses offered
 library(ggplot2)
 
-fig_cs_distribution <- ggplot(nb_data, aes(x = CS_Classes_Offered)) +
+fig_cs_distribution <- ggplot(modeling_analysis_data, aes(x = CS_Classes_Offered)) +
   geom_histogram(binwidth = 1, fill = "steelblue", color = "white") +
   facet_wrap(~ SCHOOL_YEAR) +
   coord_cartesian(xlim = c(0, 20)) +  # zoom in to make distribution visible
@@ -554,3 +561,4 @@ axis(
 abline(v = 0, col = "red", lwd = 2)
 
 dev.off()
+
