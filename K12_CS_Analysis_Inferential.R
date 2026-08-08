@@ -7,20 +7,6 @@ data1 <- read.csv("combined_data_clean_final_full.csv")
 #Import the library for data manipulation
 library(dplyr)
 
-#Extract only needed variables 
-analysis_vars <- c(
-  "CS_Classes_Offered", "school_enrollment",
-  "SCHOOL_YEAR", "TitleI_Status",
-  "Elementary", "Middle", "High",
-  "Juvenile_Justice_School",
-  "sex_female_prop",
-  "race_black_prop", "race_hispanic_prop", "race_asian_prop",
-  "race_multiracial_prop", "race_american_indian_prop",
-  "sex_female", "race_black", "race_hispanic", 
-  "race_asian", "race_multiracial", 
-  "race_american_indian"
-)
-
 #Missing data were handled using a combination of listwise deletion and imputation
 nb_data <- data1 %>%
   filter(!is.na(CS_Classes_Offered)) %>%   # Keep only schools with observed CS enrollment
@@ -38,14 +24,10 @@ write.csv(
   row.names = FALSE
 )
 
-#Now create a subset of the data for modeling purposes
-modeling_analysis_data <- nb_data %>%
-  select(all_of(analysis_vars))
-
 #####Descriptive Statistics showing plot of the histogram of CS courses offered
 library(ggplot2)
 
-fig_cs_distribution <- ggplot(modeling_analysis_data, aes(x = CS_Classes_Offered)) +
+fig_cs_distribution <- ggplot(nb_data, aes(x = CS_Classes_Offered)) +
   geom_histogram(binwidth = 1, fill = "steelblue", color = "white") +
   facet_wrap(~ SCHOOL_YEAR) +
   coord_cartesian(xlim = c(0, 20)) +  # zoom in to make distribution visible
@@ -131,6 +113,17 @@ summary (access_model_zi_m3)
 #Run AIC comparison
 AIC(access_model_m1, access_model_zi_m2, access_model_zi_m3)
 
+#Extract only needed variables 
+analysis_vars <- c(
+  "CS_Classes_Offered", "school_enrollment",
+  "SCHOOL_YEAR", "TitleI_Status",
+  "Elementary", "Middle", "High",
+  "Juvenile_Justice_School",
+  "sex_female_prop",
+  "race_black_prop", "race_hispanic_prop", "race_asian_prop",
+  "race_multiracial_prop", "race_american_indian_prop"
+)
+
 #The added variables introduced more missingness
 nb_data2 <- data1 %>%
   filter(school_enrollment > 0) %>%
@@ -138,6 +131,7 @@ nb_data2 <- data1 %>%
                 ~ ifelse(is.na(.), 0, .))) %>%
   filter(complete.cases(across(all_of(analysis_vars))))
 
+nb_data2
 
 #Export the second data for possible use in the future
 write.csv(
@@ -158,14 +152,14 @@ access_model_m1b <- glmmTMB(
     ns(log(school_enrollment), df = 2) +
     
     # Gender composition (school-level, NOT CS-specific)
-    sex_female +
+    sex_female_prop +
     
     # Race composition (school-level, NOT CS-specific)
-    race_black +
-    race_hispanic +
-    race_asian +
-    race_multiracial +
-    race_american_indian +
+    race_black_prop +
+    race_hispanic_prop +
+    race_asian_prop +
+    race_multiracial_prop +
+    race_american_indian_prop +
     
     (1 | State_Code/District_ID),
   
@@ -185,12 +179,12 @@ access_model_zi_m2b <- glmmTMB(
     
     ns(log(school_enrollment), df = 2) +
     
-    sex_female +
-    race_black +
-    race_hispanic +
-    race_asian +
-    race_multiracial +
-    race_american_indian +
+    sex_female_prop +
+    race_black_prop +
+    race_hispanic_prop +
+    race_asian_prop +
+    race_multiracial_prop +
+    race_american_indian_prop +
     
     (1 | State_Code/District_ID),
   
@@ -211,12 +205,12 @@ access_model_zi_m3b <- glmmTMB(
     
     ns(log(school_enrollment), df = 2) +
     
-    sex_female +
-    race_black +
-    race_hispanic +
-    race_asian +
-    race_multiracial +
-    race_american_indian +
+    sex_female_prop +
+    race_black_prop +
+    race_hispanic_prop +
+    race_asian_prop +
+    race_multiracial_prop +
+    race_american_indian_prop +
     
     (1 | State_Code/District_ID),
   
